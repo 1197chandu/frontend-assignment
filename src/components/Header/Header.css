@@ -1,0 +1,19 @@
+/* Header Container Styling */
+.app-header {
+  background-color: rgb(20, 20, 20);
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  height: 56px;
+  margin-right: 10px;
+}
