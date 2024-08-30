@@ -1,16 +1,17 @@
 /* Header Container Styling */
 .app-header {
+  align-items: center;
   background-color: rgb(20, 20, 20);
-  padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  margin-bottom: 60px;
+  padding: 10px 20px;
 }
 
 .logo {
-  display: flex;
   align-items: center;
+  display: flex;
 }
 
 .logo-image {
