@@ -9,7 +9,6 @@
 .movie-card {
   background-color: rgb(20, 20, 20);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 10px;
   text-align: center;
   transition: transform 0.2s ease;

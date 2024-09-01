@@ -1,11 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
-const API_KEY = "cfbf9464e14f94eb714117ea35d307b8";
-const BASE_URL = "https://api.themoviedb.org/3";
+import { API_KEY, BASE_URL } from "../utils/constant";
 
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
-  async ({ year, genres }, thunkAPI) => {
+  async ({ year, genres }) => {
     try {
       const response = await fetch(
         `${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc&primary_release_year=${year}&vote_count.gte=100${
@@ -17,10 +15,24 @@ export const fetchMovies = createAsyncThunk(
 
       return jsonData.results;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return error;
     }
   }
 );
+
+export const fetchGenres = createAsyncThunk("movies/fetchGenres", async () => {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/genre/movie/list?api_key=${API_KEY}`
+    );
+
+    const jsonData = await response.json();
+    console.log(jsonData.genres);
+    return jsonData.genres;
+  } catch (error) {
+    return error;
+  }
+});
 
 const movieSlice = createSlice({
   name: "movies",
@@ -32,7 +44,19 @@ const movieSlice = createSlice({
     selectedGenres: [],
     currentYear: 2012,
   },
-  reducers: {},
+  reducers: {
+    selectGenre: (state, action) => {
+      state.selectedGenres.push(action.payload);
+    },
+    deselectGenre: (state, action) => {
+      state.selectedGenres = state.selectedGenres.filter(
+        (id) => id !== action.payload
+      );
+    },
+    setYear: (state, action) => {
+      state.currentYear = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchMovies.pending, (state) => {
@@ -46,6 +70,9 @@ const movieSlice = createSlice({
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(fetchGenres.fulfilled, (state, action) => {
+        state.genres = action.payload;
       });
   },
 });
